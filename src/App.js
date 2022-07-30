@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from 'react';
+import { Container } from "react-bootstrap";
+import { ActionsRow } from "./components/ActionsRow";
+import { DatesCount } from './components/DatesCount';
+import { Schedules } from "./components/Schedules";
+import { persons } from '../src/data'
 
 function App() {
+
+  let [personData, setPersonData] = useState(persons)
+
+  const onDelete = () => {
+    personData = []
+    setPersonData(personData)
+  }
+
+  const viewList = () => {
+    setPersonData(persons)
+
+  }
+
+  useEffect(() => {
+    setPersonData([])
+
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="font color-body">
+
+      <Container className="py-2">
+        <DatesCount persons={personData} />
+        <Schedules persons={personData} />
+        <ActionsRow view={viewList} deletehandle={onDelete} />
+      </Container>
+
+
     </div>
   );
 }
